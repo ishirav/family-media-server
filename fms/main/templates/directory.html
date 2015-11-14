@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block main_content %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <table id="directory" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Size</th>
+                        <th>Modified</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if path %}
+                        <tr>
+                            <td><a href="..">..</a></td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                    {% endif %}
+                    {% for name, info in index.dirs.items %}
+                        <tr>
+                            <td><a href="{{ name|urlencode }}/">{{ name }}</a></td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                    {% endfor %}
+                    {% for name, info in index.files.items %}
+                        <tr>
+                            <td><a href="/media/{{ info.path|urlencode }}">{{ name }}</a></td>
+                            <td>{{ info.size }}</td>
+                            <td>{{ info.modified }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}
