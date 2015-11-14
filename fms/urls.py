@@ -23,6 +23,7 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^root/', 'fms.main.views.directory_view'),
+    url(r'^refresh/', 'fms.main.views.refresh_view'),
     url(r'^$', 'fms.main.views.home_view'),
     url('^accounts/login/', auth_views.login, {'template_name': 'login.html'}),
     url('^accounts/logout/', auth_views.logout_then_login, name="logout"),

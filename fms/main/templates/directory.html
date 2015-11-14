@@ -12,9 +12,13 @@
             </h2>
         </div>
         <div class="col-md-6">
-            <div class="btn-group" id="directory_display">
-                <a href="?mode=list" class="btn btn-primary {% if mode = "list" %}active{% endif %}">List</a>
-                <a href="?mode=grid" class="btn btn-primary {% if mode = "grid" %}active{% endif %}">Grid</a>
+            <div class="directory-actions">
+                <a href="/refresh/{{ path }}?mode={{ mode }}" class="btn btn-default">Refresh</a>
+                &nbsp;
+                <div class="btn-group">
+                    <a href="?mode=list" class="btn btn-primary {% if mode = "list" %}active{% endif %}">List</a>
+                    <a href="?mode=grid" class="btn btn-primary {% if mode = "grid" %}active{% endif %}">Grid</a>
+                </div>
             </div>
         </div>            
     </div>

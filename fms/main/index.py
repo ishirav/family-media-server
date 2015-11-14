@@ -4,6 +4,7 @@ import os
 import datetime
 from math import log
 import json
+import logging
 import mimetypes
 
 mimetypes.init()
@@ -37,9 +38,11 @@ def get_index(path):
 
 
 def generate_index(path):
+    fullpath = os.path.join(settings.MEDIA_ROOT, path)
+    logging.info('Generating index for %s', fullpath)
     index_path = get_index_path(path)
     index = dict(files={}, dirs={})
-    for name in os.listdir(os.path.join(settings.MEDIA_ROOT, path)):
+    for name in os.listdir(fullpath):
         if name != 'index.json':
             fullpath = os.path.join(settings.MEDIA_ROOT, path, name)
             if os.path.isfile(fullpath):
