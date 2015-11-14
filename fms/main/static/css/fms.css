@@ -1,3 +1,41 @@
+body {
+    padding-top: 70px;
+    font-size: 18px;
+}
+
+.navbar-brand {
+    padding: 5px 15px;
+}
+
+#directory {
+    table-layout: fixed;
+}
+
 #directory a {
     display: block;
+    text-decoration: none;
+    color: #fff;
+}
+
+#directory a:hover {
+    color: #0CE3AC;
+}
+
+#directory .image {
+    display: inline-block;
+    width: 80px;
+    text-align: center;
+    margin-right: 10px;
+}
+
+#directory td {
+    vertical-align: middle;
+}
+
+#directory td:nth-child(2) {
+    width: 100px;
+}
+
+#directory td:nth-child(3) {
+    width: 200px;
 }

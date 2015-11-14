@@ -37,6 +37,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
+    'django_thumbor',
     'fms.main',
 )
 
@@ -108,3 +110,9 @@ STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+THUMBOR_SERVER = 'http://localhost:8888'
+THUMBOR_SECURITY_KEY = 'fmsftw'
+
+
+from local_settings import *

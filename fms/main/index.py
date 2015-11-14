@@ -4,6 +4,9 @@ import os
 import datetime
 from math import log
 import json
+import mimetypes
+
+mimetypes.init()
 
 
 unit_list = zip(['bytes', 'kB', 'MB', 'GB', 'TB', 'PB'], [0, 0, 1, 2, 2, 2])
@@ -37,22 +40,26 @@ def generate_index(path):
     index_path = get_index_path(path)
     index = dict(files={}, dirs={})
     for name in os.listdir(os.path.join(settings.MEDIA_ROOT, path)):
-        fullpath = os.path.join(settings.MEDIA_ROOT, path, name)
-        if os.path.isfile(fullpath):
-            stat = os.stat(fullpath)
-            index['files'][name] = dict(
-                path=os.path.relpath(fullpath, settings.MEDIA_ROOT), 
-                size=sizeof_fmt(stat.st_size), 
-                modified=datetime.datetime.fromtimestamp(stat.st_mtime).isoformat(' ')[:16]
-            )
-        elif os.path.isdir(fullpath):
-            index['dirs'][name] = dict()
+        if name != 'index.json':
+            fullpath = os.path.join(settings.MEDIA_ROOT, path, name)
+            if os.path.isfile(fullpath):
+                index['files'][name] = get_file_info(fullpath)
+            elif os.path.isdir(fullpath):
+                index['dirs'][name] = dict()
     save_index(index, index_path)
     return index
+
+
+def get_file_info(fullpath):
+    stat = os.stat(fullpath)
+    return dict(
+        path=os.path.relpath(fullpath, settings.MEDIA_ROOT), 
+        size=sizeof_fmt(stat.st_size), 
+        modified=datetime.datetime.fromtimestamp(stat.st_mtime).isoformat(' ')[:16],
+        type=mimetypes.guess_type(fullpath)[0]
+    )
 
 
 def save_index(index, index_path):
     with open(index_path, 'wb') as f:
         json.dump(index, f, indent=4)
-
-
