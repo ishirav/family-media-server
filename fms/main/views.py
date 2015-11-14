@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 
 from index import get_index
 
 
+@login_required
 def directory_view(request):
     parts = request.path.split('/')[:-1]
     path = '/'.join(parts[2:])
@@ -16,4 +18,4 @@ def directory_view(request):
 
 def home_view(request):
     return redirect('/root/')
-    
+

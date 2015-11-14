@@ -1,4 +1,4 @@
-# family-media-server
+# Family Media Server
 
 ## Installation
 
@@ -14,8 +14,9 @@ python manage.py migrate
 
 ## Running
 
-thumbor -c thumbor.conf
+```
+thumbor -c thumbor.conf &
 python manage.py runserver
-
+```
 
 Icons from https://www.iconfinder.com/iconsets/flat-color-icons

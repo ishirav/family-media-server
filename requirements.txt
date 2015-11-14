@@ -3,6 +3,7 @@ backports.ssl-match-hostname==3.4.0.2
 certifi==2015.9.6.2
 derpconf==0.7.3
 Django==1.8.6
+django-bootstrap3==6.2.2
 django-thumbor==0.5
 futures==3.0.3
 libthumbor==1.2.0

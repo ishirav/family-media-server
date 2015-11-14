@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'django_thumbor',
+    'bootstrap3',
     'fms.main',
 )
 
@@ -113,6 +114,9 @@ MEDIA_URL = '/media/'
 
 THUMBOR_SERVER = 'http://localhost:8888'
 THUMBOR_SECURITY_KEY = 'fmsftw'
+
+
+LOGIN_REDIRECT_URL = '/root/'
 
 
 from local_settings import *
