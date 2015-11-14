@@ -1,0 +1,25 @@
+<div class="row image-grid-row">
+{% for name, info in sorted_all %}
+    <div class="col-xs-3">
+        {% if info.type == "directory" %}
+            <a href="{{ name|urlencode }}/?mode={{ mode }}">
+                <div class="img-responsive"><img src="/static/images/folder-256.png"></div>
+                {{ name }}
+            </a>
+        {% else %}
+            <a href="/media/{{ info.path|urlencode }}">
+                {% if "image" in info.type %}
+                    <img class="img-responsive" src="{{ thumbor_server }}/unsafe/262x196/{{ info.path }}">
+                {% endif %}
+                {% if "video" in info.type %}
+                    <div class="img-responsive"><img src="/static/images/film-256.png"></div>
+                {% endif %}
+                {{ name }}
+            </a>
+        {% endif %}
+    </div>
+    {% if forloop.counter|divisibleby:"4" %}
+        </div><div class="row image-grid-row">
+    {% endif %}
+{% endfor %}
+</div>

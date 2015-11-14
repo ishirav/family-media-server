@@ -12,7 +12,9 @@ def directory_view(request):
     index = get_index(path)
     sorted_dirs = sorted(index['dirs'].items())
     sorted_files = sorted(index['files'].items())
+    sorted_all = sorted_dirs + sorted_files
     thumbor_server = settings.THUMBOR_SERVER
+    mode = request.GET.get('mode', 'list')
     return render(request, 'directory.html', locals())
 
 

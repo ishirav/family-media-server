@@ -30,9 +30,9 @@ def get_index_path(path):
 
 def get_index(path):
     index_path = get_index_path(path)
-    # if os.path.exists(index_path):
-    #     with open(index_path, 'rb') as f:
-    #         return json.load(f)
+    if os.path.exists(index_path):
+        with open(index_path, 'rb') as f:
+            return json.load(f)
     return generate_index(path)
 
 
@@ -45,7 +45,7 @@ def generate_index(path):
             if os.path.isfile(fullpath):
                 index['files'][name] = get_file_info(fullpath)
             elif os.path.isdir(fullpath):
-                index['dirs'][name] = dict()
+                index['dirs'][name] = dict(type="directory")
     save_index(index, index_path)
     return index
 

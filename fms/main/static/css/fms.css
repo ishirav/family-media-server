@@ -39,3 +39,32 @@ body {
 #directory td:nth-child(3) {
     width: 200px;
 }
+
+#directory_display {
+    float: right;
+    margin-top: 20px;
+}
+
+.image-grid-row a {
+    border: 1px solid #666;
+    border-radius: 4px;
+    text-align: center;
+    display: block;
+    width: 100%;
+    margin-top: 30px;
+    text-decoration: none;
+    color: #fff;
+}
+
+.image-grid-row a:hover {
+    color: #0CE3AC;
+}
+
+.image-grid-row .img-responsive {
+    max-height: 196px;
+}
+
+.image-grid-row img {
+    max-height: 196px;
+    border-radius: 4px 4px 0 0;
+}
