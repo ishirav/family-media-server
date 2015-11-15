@@ -56,7 +56,7 @@ def generate_index(path):
 
 def get_file_info(fullpath):
     type = mimetypes.guess_type(fullpath)[0]
-    if not ('image' in type or 'video' in type):
+    if not (type and ('image' in type or 'video' in type)):
         return None
     stat = os.stat(fullpath)
     return dict(
