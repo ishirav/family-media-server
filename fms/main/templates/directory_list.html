@@ -34,10 +34,10 @@
                     {% spaceless %}
                         <tr>
                             <td>
-                                <a href="/media/{{ info.path|urlencode }}">
+                                <a href="/media/{{ path|urlencode }}{{ name|urlencode }}">
                                     <div class="image">
                                         {% if "image" in info.type %}
-                                            <img src="{{ thumbor_server }}/unsafe/80x60/{{ info.path }}" width="80" height="60">
+                                            <img src="{{ thumbor_server }}/unsafe/80x60/{{ path|urlencode }}{{ name|urlencode }}" width="80" height="60">
                                         {% endif %}
                                         {% if "video" in info.type %}
                                             <img src="/static/images/film-256.png" height="60">

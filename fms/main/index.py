@@ -43,23 +43,26 @@ def generate_index(path):
     index_path = get_index_path(path)
     index = dict(files={}, dirs={})
     for name in os.listdir(fullpath):
-        if name != 'index.json':
-            fullpath = os.path.join(settings.MEDIA_ROOT, path, name)
-            if os.path.isfile(fullpath):
-                index['files'][name] = get_file_info(fullpath)
-            elif os.path.isdir(fullpath):
-                index['dirs'][name] = dict(type="directory")
+        fullpath = os.path.join(settings.MEDIA_ROOT, path, name)
+        if os.path.isfile(fullpath):
+            info = get_file_info(fullpath)
+            if info:
+                index['files'][name] = info
+        elif os.path.isdir(fullpath):
+            index['dirs'][name] = dict(type="directory")
     save_index(index, index_path)
     return index
 
 
 def get_file_info(fullpath):
+    type = mimetypes.guess_type(fullpath)[0]
+    if not ('image' in type or 'video' in type):
+        return None
     stat = os.stat(fullpath)
     return dict(
-        path=os.path.relpath(fullpath, settings.MEDIA_ROOT), 
         size=sizeof_fmt(stat.st_size), 
         modified=datetime.datetime.fromtimestamp(stat.st_mtime).isoformat(' ')[:16],
-        type=mimetypes.guess_type(fullpath)[0]
+        type=type
     )
 
 
