@@ -31,9 +31,13 @@ def get_index_path(path):
 
 def get_index(path):
     index_path = get_index_path(path)
-    if os.path.exists(index_path):
-        with open(index_path, 'rb') as f:
-            return json.load(f)
+    try:
+        if os.path.exists(index_path):
+            with open(index_path, 'rb') as f:
+                return update_index(path, json.load(f))
+    except:
+        logging.exception('Problem with index for "%s"', path)
+        pass
     return generate_index(path)
 
 
@@ -43,15 +47,44 @@ def generate_index(path):
     index_path = get_index_path(path)
     index = dict(files={}, dirs={})
     for name in os.listdir(fullpath):
-        fullpath = os.path.join(settings.MEDIA_ROOT, path, name)
-        if os.path.isfile(fullpath):
-            info = get_file_info(fullpath)
-            if info:
-                index['files'][name] = info
-        elif os.path.isdir(fullpath):
-            index['dirs'][name] = dict(type="directory")
+        add_to_index(path, name, index)
     save_index(index, index_path)
     return index
+
+
+def update_index(path, index):
+    fullpath = os.path.join(settings.MEDIA_ROOT, path)
+    updated = False
+    files, dirs = index['files'], index['dirs']
+    names = set(os.listdir(fullpath))
+    for name in names:
+        if name not in files and name not in dirs:
+            updated = add_to_index(path, name, index)
+    for name in files.keys():
+        if name not in names:
+            del files[name]
+            updated = True
+    for name in dirs.keys():
+        if name not in names:
+            del dirs[name]
+            updated = True
+    if updated:
+        logging.info('Updating index for %s', fullpath)
+        save_index(index, get_index_path(path))
+    return index
+
+
+def add_to_index(path, name, index):
+    fullpath = os.path.join(settings.MEDIA_ROOT, path, name)
+    if os.path.isfile(fullpath):
+        info = get_file_info(fullpath)
+        if info:
+            index['files'][name] = info
+            return True
+    elif os.path.isdir(fullpath):
+        index['dirs'][name] = dict(type="directory")
+        return True
+    return False
 
 
 def get_file_info(fullpath):
