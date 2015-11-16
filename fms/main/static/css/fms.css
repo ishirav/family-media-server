@@ -1,6 +1,7 @@
 body {
     padding-top: 70px;
     font-size: 18px;
+    overflow-y: scroll;
 }
 
 .navbar-brand {
@@ -28,16 +29,9 @@ body {
     margin-right: 10px;
 }
 
-#directory td {
-    vertical-align: middle;
-}
-
-#directory td:nth-child(2) {
-    width: 100px;
-}
-
-#directory td:nth-child(3) {
-    width: 200px;
+#directory .row {
+    margin-bottom: 10px;
+    line-height: 60px;
 }
 
 .directory-actions {

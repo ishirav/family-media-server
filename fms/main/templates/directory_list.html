@@ -1,57 +1,55 @@
-<div class="row">
-    <div class="col-md-12">
-        <table id="directory" class="table table-hover">
-             <tbody>
-                {% if path %}
-                    <tr>
-                        <td>
-                            <a href="../?mode={{ mode }}">
-                                <div class="image">
-                                    <img src="/static/images/upload-256.png" height="60">
-                                </div> 
-                                go up
-                            </a>
-                        </td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                    </tr>
-                {% endif %}
-                {% for name, info in sorted_dirs %}
-                    <tr>
-                        <td>
-                            <a href="{{ name|urlencode }}/?mode={{ mode }}">
-                                <div class="image">
-                                    <img src="/static/images/folder-256.png" height="60">
-                                </div>
-                                {{ name }}
-                            </a>
-                        </td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                    </tr>
-                {% endfor %}
-                {% for name, info in sorted_files %}
-                    {% spaceless %}
-                        <tr>
-                            <td>
-                                <a href="/media/{{ path|urlencode }}{{ name|urlencode }}">
-                                    <div class="image">
-                                        {% if "image" in info.type %}
-                                            <img src="{{ thumbor_server }}/unsafe/80x60/{{ path|urlencode }}{{ name|urlencode }}" width="80" height="60">
-                                        {% endif %}
-                                        {% if "video" in info.type %}
-                                            <img src="/static/images/film-256.png" height="60">
-                                        {% endif %}
-                                    </div>
-                                    {{ name }}
-                                </a>
-                            </td>
-                            <td>{{ info.size }}</td>
-                            <td>{{ info.modified }}</td>
-                        </tr>
-                    {% endspaceless %}
-                {% endfor %}
-            </tbody>
-        </table>
+<section id="directory">
+
+{% if path %}
+    <div class="row">
+        <div class="col-md-8">
+            <a href="../?mode={{ mode }}">
+                <div class="image">
+                    <img src="/static/images/upload-256.png" height="60">
+                </div> 
+                go up
+            </a>
+        </div>
     </div>
-</div>
+{% endif %}
+
+{% for name, info in sorted_dirs %}
+    <div class="row">
+        <div class="col-md-8">
+            <a href="{{ name|urlencode }}/?mode={{ mode }}">
+                <div class="image">
+                    <img src="/static/images/folder-256.png" height="60">
+                </div>
+                {{ name }}
+            </a>
+        </div>
+    </div>
+{% endfor %}
+
+{% for name, info in sorted_files %}
+    {% spaceless %}
+        <div class="row">
+            <div class="col-md-7">
+                <a href="/media/{{ path|urlencode }}{{ name|urlencode }}">
+                    <div class="image">
+                        {% if "image" in info.type %}
+                            <img src="{{ thumbor_server }}/unsafe/80x60/{{ path|urlencode }}{{ name|urlencode }}" width="80" height="60">
+                        {% endif %}
+                        {% if "video" in info.type %}
+                            <img src="/static/images/film-256.png" height="60">
+                        {% endif %}
+                    </div>
+                    {{ name }}
+                </a>
+            </div>
+            <div class="col-md-2 hidden-sm hidden-xs text-right">
+                {{ info.size }}
+            </div>
+            <div class="col-md-3 hidden-sm hidden-xs">
+                {{ info.modified }}
+            </div>
+        </div>
+    {% endspaceless %}
+{% endfor %}
+
+</section>
