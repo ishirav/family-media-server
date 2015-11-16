@@ -37,7 +37,7 @@ def directory_view(request):
     sorted_files = sorted(index['files'].items())
     sorted_all = sorted_dirs + sorted_files
     thumbor_server = settings.THUMBOR_SERVER
-    mode = request.GET.get('mode', 'list')
+    mode = request.GET.get('mode', 'grid')
     return render(request, 'directory.html', locals())
 
 
@@ -45,7 +45,7 @@ def directory_view(request):
 def refresh_view(request):
     path = get_path(request)
     generate_index(path)
-    mode = request.GET.get('mode', 'list')
+    mode = request.GET.get('mode', 'grid')
     return redirect('/root/%s?mode=%s' % (path, mode))
 
 
