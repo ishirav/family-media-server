@@ -17,9 +17,21 @@ def get_path(request):
     return path
 
 
+def get_breadcrumbs(path):
+    breadcrumbs = []
+    parts = ('home/' + path).split('/')[:-1]
+    level = 0
+    for part in reversed(parts):
+        path = '../' * level
+        breadcrumbs.append(dict(name=part, path=path))
+        level += 1
+    return reversed(breadcrumbs)
+
+
 @login_required
 def directory_view(request):
     path = get_path(request)
+    breadcrumbs = get_breadcrumbs(path)
     index = get_index(path)
     sorted_dirs = sorted(index['dirs'].items())
     sorted_files = sorted(index['files'].items())

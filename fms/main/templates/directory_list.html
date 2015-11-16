@@ -1,18 +1,5 @@
 <section id="directory">
 
-{% if path %}
-    <div class="row">
-        <div class="col-md-8">
-            <a href="../?mode={{ mode }}">
-                <div class="image">
-                    <img src="/static/images/upload-256.png" height="60">
-                </div> 
-                go up
-            </a>
-        </div>
-    </div>
-{% endif %}
-
 {% for name, info in sorted_dirs %}
     <div class="row">
         <div class="col-md-8">

@@ -8,6 +8,15 @@ body {
     padding: 5px 15px;
 }
 
+.breadcrumbs {
+    font-size: 22px;
+}
+
+.breadcrumbs .here {
+    font-size: 26px;
+    font-weight: bold;
+}
+
 #directory {
     table-layout: fixed;
 }

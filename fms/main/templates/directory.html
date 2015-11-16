@@ -6,8 +6,15 @@
 
     <div class="row">
         <div class="col-md-6">
-            <h2>
-                {{ parts|last }} 
+            <h2 class="breadcrumbs">
+                {% for bc in breadcrumbs %}
+                    {% if bc.path %}
+                        <a href="{{ bc.path }}">{{ bc.name }} /</a>
+                    {% else %}
+                        <span class="here">{{ bc.name }}</span>
+                    {% endif %}
+                {% endfor %}
+                &nbsp;
                 <span class="badge">{{ index.files|length|intcomma }} file{{ index.files|length|pluralize }}</span>
             </h2>
         </div>
