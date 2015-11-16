@@ -74,11 +74,13 @@ body {
 .video_overlay {
     position: absolute;
     top: 0;
-    height: 100%;
+    left: 0;
+    height: 80%;
 }
 
 #directory .video_overlay {
-    left: 24px;
+    height: 100%;
+    left: 8px;
 }
 
 @media (max-width: 1200px) {

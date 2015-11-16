@@ -3,6 +3,11 @@
 ## Installation
 
 ```
+sudo apt-get install software-properties-common
+sudo add-apt-repository ppa:kirillshkrogalev/ffmpeg-next
+sudo apt-get update
+sudo apt-get install ffmpeg
+
 sudo apt-get install libcurl4-openssl-dev libtiff4-dev libjpeg8-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev
 virtualenv env
 source env/bin/activate
