@@ -8,11 +8,9 @@
             </a>
         {% else %}
             <a href="/media/{{ path|urlencode }}{{ name|urlencode }}">
-                {% if "image" in info.type %}
-                    <img class="img-responsive" src="{{ thumbor_server }}/unsafe/262x196/{{ path|urlencode }}{{ name|urlencode }}">
-                {% endif %}
+                <img class="img-responsive" src="{{ thumbor_server }}/unsafe/262x196/{{ path|urlencode }}{{ name|urlencode }}">
                 {% if "video" in info.type %}
-                    <div class="img-responsive"><img src="/static/images/film-256.png"></div>
+                    <img src="/static/images/start-64.png" class="video_overlay">
                 {% endif %}
                 {{ name }}
             </a>

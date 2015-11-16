@@ -32,11 +32,9 @@
             <div class="col-md-7">
                 <a href="/media/{{ path|urlencode }}{{ name|urlencode }}">
                     <div class="image">
-                        {% if "image" in info.type %}
-                            <img src="{{ thumbor_server }}/unsafe/80x60/{{ path|urlencode }}{{ name|urlencode }}" width="80" height="60">
-                        {% endif %}
+                        <img src="{{ thumbor_server }}/unsafe/80x60/{{ path|urlencode }}{{ name|urlencode }}" width="80" height="60">
                         {% if "video" in info.type %}
-                            <img src="/static/images/film-256.png" height="60">
+                            <img src="/static/images/start-64.png" class="video_overlay">
                         {% endif %}
                     </div>
                     {{ name }}
