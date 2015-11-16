@@ -19,7 +19,7 @@ def get_path(request):
 
 def get_breadcrumbs(path):
     breadcrumbs = []
-    parts = ('home/' + path).split('/')[:-1]
+    parts = ('Home/' + path).split('/')[:-1]
     level = 0
     for part in reversed(parts):
         path = '../' * level
