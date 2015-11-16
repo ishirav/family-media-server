@@ -51,7 +51,6 @@ body {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    font-size: 1.5vw;
 }
 
 .image-grid-row a:hover {
@@ -69,4 +68,10 @@ body {
 
 .image-grid-row div.img-responsive > img {
     width: 75%;
+}
+
+@media (max-width: 1200px) {
+    .image-grid-row a {
+        font-size: 1.5vw;
+    }
 }
