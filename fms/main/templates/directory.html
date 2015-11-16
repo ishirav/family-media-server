@@ -9,7 +9,7 @@
             <h2 class="breadcrumbs">
                 {% for bc in breadcrumbs %}
                     {% if bc.path %}
-                        <a href="{{ bc.path }}">{{ bc.name }} /</a>
+                        <a href="{{ bc.path }}?mode={{ mode }}">{{ bc.name }} /</a>
                     {% else %}
                         <span class="here">{{ bc.name }}</span>
                     {% endif %}
