@@ -22,3 +22,4 @@ six==1.10.0
 statsd==3.2.1
 thumbor==5.2.1
 tornado==4.3
+https://github.com/thumbor-community/video/zipball/master
