@@ -8,6 +8,7 @@ import logging
 import os
 
 from index import get_index, generate_index
+from path_utils import drop_path_base, delete_any, copy_any
 
 
 def get_path(request):
@@ -23,6 +24,7 @@ def get_path(request):
 def verify_path(path):
     path = os.path.normpath(path)
     if not path.startswith(settings.MEDIA_ROOT):
+        logging.error('Blocked access to invalid path: "%s"', path)
         raise Http404
 
 
@@ -71,19 +73,19 @@ def cut_or_copy_view(request):
 
 @login_required
 def paste_view(request):
-    from shutil import copy2, move
+    from shutil import move
     data = request.session.get('clipboard', {})
     paths = data.get('paths', [])
     if not paths:
         return HttpResponse('Your clipboard is empty.')
     mode = data.get('mode', 'copy')
-    method = copy2 if mode == 'copy' else move
+    method = copy_any if mode == 'copy' else move
     try:
         target_dir = os.path.join(settings.MEDIA_ROOT, get_path(request))
         for path in paths:
-            source_path = os.path.join(settings.MEDIA_ROOT, '..' + path)
+            source_path = os.path.join(settings.MEDIA_ROOT, drop_path_base(path))
             verify_path(source_path)
-            file_name = os.path.basename(path)
+            file_name = [part for part in path.split('/') if part][-1]
             target_path = os.path.join(target_dir, file_name)
             while os.path.exists(target_path):
                 file_name = '_' + file_name
@@ -102,11 +104,25 @@ def delete_view(request):
     try:
         data = json.loads(request.body)
         for path in data['paths']:
-            full_path = os.path.join(settings.MEDIA_ROOT, '..' + path)
+            full_path = os.path.join(settings.MEDIA_ROOT, drop_path_base(path))
             verify_path(full_path)
-            os.remove(full_path)
+            delete_any(full_path)
     except Exception, e:
         logging.exception('Error in delete_view')
+        return HttpResponse(unicode(e))
+    return HttpResponse('')
+
+
+@login_required
+def new_folder_view(request):
+    try:
+        data = json.loads(request.body)
+        name = data.get('name') or 'New Folder'
+        target_dir = os.path.join(settings.MEDIA_ROOT, get_path(request), name)
+        verify_path(target_dir)
+        os.mkdir(target_dir)
+    except Exception, e:
+        logging.exception('Error in new_folder_view')
         return HttpResponse(unicode(e))
     return HttpResponse('')
 

@@ -16,7 +16,10 @@ function select_item(item) {
 
 
 function get_selection() {
-    return jQuery.map($('.selected'), function(item) { return decodeURI($(item).data('url')) });
+    return jQuery.map($('.selected'), function(item) { 
+        var url = decodeURI($(item).data('url'));
+        return url.split('?')[0];
+    });
 }
 
 function cut_or_copy(mode) {
@@ -84,6 +87,47 @@ function del() {
 }
 
 
+function new_folder_prompt() {
+    BootstrapDialog.show({
+        title: 'New Folder',
+        message: '<input class="form-control" placeholder="Enter folder name" id="folder_name">',
+        buttons: [
+            {
+                label: 'Cancel',
+                action: function(dialogRef) {
+                    dialogRef.close();
+                }
+            },
+            {
+                label: 'Create',
+                cssClass: 'btn-success',
+                action: function(dialogRef) {
+                    new_folder($('#folder_name').val());
+                    dialogRef.close();                    
+                }
+            }            
+        ],       
+        onshown: function(dialogRef) {
+            $('#folder_name').focus();
+        }
+    });
+}
+
+
+function new_folder(name) {
+    var target_path = window.location.pathname.replace('/root/', '/new_folder/');
+    $.post(target_path, JSON.stringify({name: name}))
+        .done(function(msg) {
+            if (msg) {
+                BootstrapDialog.show({title: 'Error', message: msg});
+            }
+            else {
+                window.location = window.location;
+            }
+        });
+}
+
+
 function init_event_handlers() {
         
     var gesture_handler = new Hammer($('#directory').get(0));
@@ -109,6 +153,7 @@ function init_event_handlers() {
     $('.copy-btn').on('click', copy);
     $('.paste-btn').on('click', paste);
     $('.delete-btn').on('click', confirm_del);
+    $('.new-btn').on('click', new_folder_prompt);
 }
 
 
