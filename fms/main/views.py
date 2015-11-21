@@ -1,7 +1,11 @@
 from django.shortcuts import render, redirect
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
-from django.http import Http404
+from django.http import Http404, HttpResponse
+
+import json
+import logging
+import os
 
 from index import get_index, generate_index
 
@@ -13,8 +17,13 @@ def get_path(request):
     path = '/'.join(parts[1:]) + '/'
     if path == '/':
         path = ''
-    print 'PATH: "%s"' % path
     return path
+
+
+def verify_path(path):
+    path = os.path.normpath(path)
+    if not path.startswith(settings.MEDIA_ROOT):
+        raise Http404
 
 
 def get_breadcrumbs(path):
@@ -47,6 +56,59 @@ def refresh_view(request):
     generate_index(path)
     mode = request.GET.get('mode', 'grid')
     return redirect('/root/%s?mode=%s' % (path, mode))
+
+
+@login_required
+def cut_or_copy_view(request):
+    try:
+        data = json.loads(request.body)
+        request.session['clipboard'] = data
+    except:
+        logging.exception('Error in cut_or_copy_view')
+        return HttpResponse('Operation failed.')
+    return HttpResponse('')
+
+
+@login_required
+def paste_view(request):
+    from shutil import copy2, move
+    data = request.session.get('clipboard', {})
+    paths = data.get('paths', [])
+    if not paths:
+        return HttpResponse('Your clipboard is empty.')
+    mode = data.get('mode', 'copy')
+    method = copy2 if mode == 'copy' else move
+    try:
+        target_dir = os.path.join(settings.MEDIA_ROOT, get_path(request))
+        for path in paths:
+            source_path = os.path.join(settings.MEDIA_ROOT, '..' + path)
+            verify_path(source_path)
+            file_name = os.path.basename(path)
+            target_path = os.path.join(target_dir, file_name)
+            while os.path.exists(target_path):
+                file_name = '_' + file_name
+                target_path = os.path.join(target_dir, file_name)
+            verify_path(target_path)
+            method(source_path, target_path)
+    except Exception, e:
+        logging.exception('Error in paste_view')
+        return HttpResponse(unicode(e))
+    request.session['clipboard'] = {}
+    return HttpResponse('')
+
+
+@login_required
+def delete_view(request):
+    try:
+        data = json.loads(request.body)
+        for path in data['paths']:
+            full_path = os.path.join(settings.MEDIA_ROOT, '..' + path)
+            verify_path(full_path)
+            os.remove(full_path)
+    except Exception, e:
+        logging.exception('Error in delete_view')
+        return HttpResponse(unicode(e))
+    return HttpResponse('')
 
 
 def home_view(request):

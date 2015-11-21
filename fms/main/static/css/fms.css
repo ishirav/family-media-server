@@ -21,13 +21,11 @@ body {
     table-layout: fixed;
 }
 
-#directory a {
-    display: block;
-    text-decoration: none;
+#directory .item {
     color: #fff;
 }
 
-#directory a:hover {
+#directory .item:hover {
     color: #0CE3AC;
 }
 
@@ -48,7 +46,15 @@ body {
     margin-top: 20px;
 }
 
-.image-grid-row a {
+.directory-actions .btn {
+    margin-left: 10px;
+}
+
+.select-true {
+    display: none;
+}
+
+.image-grid-row .item {
     border: 1px solid #666;
     border-radius: 4px;
     text-align: center;
@@ -63,8 +69,12 @@ body {
     position: relative;
 }
 
-.image-grid-row a:hover {
+.image-grid-row .item:hover {
     color: #0CE3AC;
+}
+
+.image-grid-row .item.selected {
+    box-shadow: 0 0 5px #0ff;
 }
 
 .image-grid-row .img-responsive {
@@ -93,7 +103,7 @@ body {
 }
 
 @media (max-width: 1200px) {
-    .image-grid-row a {
+    .image-grid-row .item {
         font-size: 1.5vw;
     }
 }

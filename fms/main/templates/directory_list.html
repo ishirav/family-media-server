@@ -3,12 +3,12 @@
 {% for name, info in sorted_dirs %}
     <div class="row">
         <div class="col-md-8">
-            <a href="{{ name|urlencode }}/?mode={{ mode }}">
+            <div class="item" data-url="{{ name|urlencode }}/?mode={{ mode }}">
                 <div class="image">
                     <img src="/static/images/folder-256.png" height="60">
                 </div>
                 {{ name }}
-            </a>
+            </div>
         </div>
     </div>
 {% endfor %}
@@ -17,7 +17,7 @@
     {% spaceless %}
         <div class="row">
             <div class="col-md-7">
-                <a href="/media/{{ path|urlencode }}{{ name|urlencode }}">
+                <div class="item" data-url="/media/{{ path|urlencode }}{{ name|urlencode }}">
                     <div class="image">
                         <img src="{{ thumbor_server }}/unsafe/80x60/{{ path|urlencode }}{{ name|urlencode }}" width="80" height="60">
                         {% if "video" in info.type %}
@@ -25,7 +25,7 @@
                         {% endif %}
                     </div>
                     {{ name }}
-                </a>
+                </div>
             </div>
             <div class="col-md-2 hidden-sm hidden-xs text-right">
                 {{ info.size }}

@@ -19,12 +19,17 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib.auth import views as auth_views
 
+from fms.main.views import *
+
 
 urlpatterns = [
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^root/', 'fms.main.views.directory_view'),
-    url(r'^refresh/', 'fms.main.views.refresh_view'),
-    url(r'^$', 'fms.main.views.home_view'),
-    url('^accounts/login/', auth_views.login, {'template_name': 'login.html'}),
-    url('^accounts/logout/', auth_views.logout_then_login, name="logout"),
+    url(r'^admin/',           include(admin.site.urls)),
+    url(r'^root/',            directory_view),
+    url(r'^refresh/',         refresh_view),
+    url(r'^cut_or_copy/$',    cut_or_copy_view, name='cut_or_copy'),
+    url(r'^paste/',           paste_view, name='paste'),
+    url(r'^delete/',          delete_view, name='delete'),
+    url(r'^$',                home_view),
+    url(r'^accounts/login/',  auth_views.login, {'template_name': 'login.html'}),
+    url(r'^accounts/logout/', auth_views.logout_then_login, name="logout"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

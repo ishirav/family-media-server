@@ -1,19 +1,21 @@
+<section id="directory">
+
 <div class="row image-grid-row">
 {% for name, info in sorted_all %}
     <div class="col-xs-3">
         {% if info.type == "directory" %}
-            <a href="{{ name|urlencode }}/?mode={{ mode }}">
+            <div class="item" data-url="{{ name|urlencode }}/?mode={{ mode }}">
                 <div class="img-responsive"><img src="/static/images/folder-256.png"></div>
                 {{ name }}
-            </a>
+            </div>
         {% else %}
-            <a href="/media/{{ path|urlencode }}{{ name|urlencode }}">
+            <div class="item" data-url="/media/{{ path|urlencode }}{{ name|urlencode }}">
                 <img class="img-responsive" src="{{ thumbor_server }}/unsafe/262x196/{{ path|urlencode }}{{ name|urlencode }}">
                 {% if "video" in info.type %}
                     <img src="/static/images/start-64.png" class="video_overlay">
                 {% endif %}
                 {{ name }}
-            </a>
+            </div>
         {% endif %}
     </div>
     {% if forloop.counter|divisibleby:"4" %}
@@ -21,3 +23,5 @@
     {% endif %}
 {% endfor %}
 </div>
+
+</section>

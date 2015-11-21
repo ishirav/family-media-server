@@ -20,12 +20,15 @@
         </div>
         <div class="col-md-6">
             <div class="directory-actions">
-                <a href="/refresh/{{ path }}?mode={{ mode }}" class="btn btn-default">Refresh</a>
-                &nbsp;
-                <div class="btn-group">
-                    <a href="?mode=grid" class="btn btn-primary {% if mode = "grid" %}active{% endif %}">Grid</a>
-                    <a href="?mode=list" class="btn btn-primary {% if mode = "list" %}active{% endif %}">List</a>
+                {# <a href="/refresh/{{ path }}?mode={{ mode }}" class="btn btn-default">Refresh</a> #}
+                <div class="btn-group select-false">
+                    <a href="?mode=grid" class="btn btn-success {% if mode = "grid" %}active{% endif %}">Grid</a>
+                    <a href="?mode=list" class="btn btn-success {% if mode = "list" %}active{% endif %}">List</a>
                 </div>
+                <a class="btn btn-danger delete-btn select-true">Delete</a>
+                <a class="btn btn-primary cut-btn select-true">Cut</a>
+                <a class="btn btn-primary copy-btn select-true">Copy</a>
+                <a class="btn btn-primary paste-btn">Paste</a>
             </div>
         </div>            
     </div>
@@ -38,4 +41,8 @@
 
     <br><br>
     
+    <script>
+        init_event_handlers();
+    </script>
+
 {% endblock %}
