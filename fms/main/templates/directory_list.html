@@ -1,9 +1,9 @@
 <section id="directory">
 
 {% for name, info in sorted_dirs %}
-    <div class="row">
+    <div class="row directory-list-row">
         <div class="col-md-8">
-            <div class="item" data-url="{{ name|urlencode }}/?mode={{ mode }}">
+            <div class="item" data-url="/home/{{ path|urlencode }}{{ name|urlencode }}/?mode={{ mode }}">
                 <div class="image">
                     <img src="/static/images/folder-256.png" height="60">
                 </div>
@@ -15,7 +15,7 @@
 
 {% for name, info in sorted_files %}
     {% spaceless %}
-        <div class="row">
+        <div class="row directory-list-row">
             <div class="col-md-7">
                 <div class="item" data-url="/media/{{ path|urlencode }}{{ name|urlencode }}">
                     <div class="image">

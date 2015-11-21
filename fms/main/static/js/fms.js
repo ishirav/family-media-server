@@ -48,7 +48,7 @@ function copy() {
 
 
 function paste() {
-    var target_path = window.location.pathname.replace('/root/', '/paste/');
+    var target_path = window.location.pathname.replace('/home/', '/paste/');
     $.post(target_path, function(msg) {
         if (msg) {
             BootstrapDialog.show({title: 'Error', message: msg});
@@ -115,7 +115,7 @@ function new_folder_prompt() {
 
 
 function new_folder(name) {
-    var target_path = window.location.pathname.replace('/root/', '/new_folder/');
+    var target_path = window.location.pathname.replace('/home/', '/new_folder/');
     $.post(target_path, JSON.stringify({name: name}))
         .done(function(msg) {
             if (msg) {

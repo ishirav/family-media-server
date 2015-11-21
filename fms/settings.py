@@ -142,7 +142,7 @@ THUMBOR_SERVER = 'http://localhost:8888'
 THUMBOR_SECURITY_KEY = 'fmsftw'
 
 
-LOGIN_REDIRECT_URL = '/root/'
+LOGIN_REDIRECT_URL = '/home/'
 
 
 from local_settings import *

@@ -24,7 +24,7 @@ from fms.main.views import *
 
 urlpatterns = [
     url(r'^admin/',           include(admin.site.urls)),
-    url(r'^root/',            directory_view),
+    url(r'^home/',            directory_view),
     url(r'^refresh/',         refresh_view),
     url(r'^cut_or_copy/$',    cut_or_copy_view, name='cut_or_copy'),
     url(r'^paste/',           paste_view, name='paste'),

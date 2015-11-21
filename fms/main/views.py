@@ -57,7 +57,7 @@ def refresh_view(request):
     path = get_path(request)
     generate_index(path)
     mode = request.GET.get('mode', 'grid')
-    return redirect('/root/%s?mode=%s' % (path, mode))
+    return redirect('/home/%s?mode=%s' % (path, mode))
 
 
 @login_required
@@ -128,5 +128,5 @@ def new_folder_view(request):
 
 
 def home_view(request):
-    return redirect('/root/')
+    return redirect('/home/')
 

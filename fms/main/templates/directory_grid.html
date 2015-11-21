@@ -4,7 +4,7 @@
 {% for name, info in sorted_all %}
     <div class="col-xs-3">
         {% if info.type == "directory" %}
-            <div class="item" data-url="/root/{{ path|urlencode }}{{ name|urlencode }}/?mode={{ mode }}">
+            <div class="item" data-url="/home/{{ path|urlencode }}{{ name|urlencode }}/?mode={{ mode }}">
                 <div class="img-responsive"><img src="/static/images/folder-256.png"></div>
                 {{ name }}
             </div>
