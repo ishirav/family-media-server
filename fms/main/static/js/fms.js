@@ -130,11 +130,12 @@ function new_folder(name) {
 
 function init_event_handlers() {
         
-    var gesture_handler = new Hammer($('#directory').get(0));
+    var gesture_handler = new Hammer($('#directory').get(0), {domEvents: true});
 
     gesture_handler.on('press', function(ev) {
         var item = $(ev.target).closest('.item');
         select_item(item);
+        ev.gesture.preventDefault();
     });
 
     gesture_handler.on('tap', function(ev) {
@@ -147,6 +148,7 @@ function init_event_handlers() {
                 window.location.href = item.data('url');
             }
         }
+        ev.gesture.preventDefault();
     });
 
     $('.cut-btn').on('click', cut);
